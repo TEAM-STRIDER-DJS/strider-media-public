@@ -1,0 +1,41 @@
+server:
+  port: 8008
+
+spring:
+  application:
+    name: strider-media
+  profiles:
+    include: secret
+
+aws:
+  region: ap-northeast-2
+  s3:
+    bucket: ${AWS_S3_BUCKET:your-s3-bucket}
+    presign-expiration-seconds: 300
+
+cloudfront:
+  domain: d1im7m6hfv0ay5.cloudfront.net
+
+logging:
+  level:
+    root: INFO
+    com.strider: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg%n"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+  # Health 체크 최소화
+  health:
+    defaults:
+      enabled: false    # 기본 HealthIndicator 모두 비활성화
+    db:
+      enabled: false    # DB HealthIndicator 비활성화
+    redis:
+      enabled: false    # Redis HealthIndicator 비활성화
+    s3:
+      enabled: false    # S3 HealthIndicator 비활성화
